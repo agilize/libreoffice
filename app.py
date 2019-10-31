@@ -25,17 +25,13 @@ def application(request):
         return Response('alive')
 
     with tempfile.NamedTemporaryFile(suffix='.docx') as source_file:
-        # First check if any files were uploaded
         source_file.write(request.files['file'].read())
-        # Load any options that may have been provided in options
         options = json.loads(request.form.get('options', '{}'))
 
         source_file.flush()
 
-        # Evaluate argument to run with subprocess
         args = ['libreoffice', '--headless', '--convert-to', 'pdf', source_file.name, '--outdir', '/tmp']
 
-        # Add Global Options
         if options:
             for option, value in options.items():
                 args.append('--%s' % option)
@@ -46,15 +42,11 @@ def application(request):
                     else:
                         args.append('"%s"' % value)
 
-        # Add source file name and output file name
         file_name = source_file.name
-        # args += [file_name, file_name + ".pdf"]
 
         cmd = ' '.join(args)
 
-        # Execute the command using executor
-        print("Executing > " + cmd)
-        execute(cmd)
+		execute(cmd)
 
         pdf_file = open(file_name.replace(".docx", ".pdf"))
 
