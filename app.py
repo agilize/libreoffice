@@ -46,7 +46,7 @@ def application(request):
 
         cmd = ' '.join(args)
 
-		execute(cmd)
+        execute(cmd)
 
         pdf_file = open(file_name.replace(".docx", ".pdf"))
 

@@ -8,3 +8,7 @@
 *.pyc
 demo.pdf
 demo.zip
+
+
+# IDE
+.idea
